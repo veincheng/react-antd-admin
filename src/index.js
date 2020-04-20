@@ -9,7 +9,7 @@ import {Provider} from 'react-redux'
 import {BrowserRouter as Router, Route,Link} from 'react-router-dom';
 import './utils/index.js';  // 引入各种prototype辅助方法
 import store from './redux/store.js';  // redux store
-
+import './App.css';
 // 开始引入各种自定义的组件
 import App from './components/App';
 import Welcome from './components/Welcome';
@@ -30,10 +30,9 @@ const routes = (
   <Provider store={store}>
     <ConfigProvider locale={zhCN}>
     <Router>
-      
-      <Route path="/" component={Hello}>
-        <Route exact path="/" component={Welcome}/>
-        <Route exact path="/test" component={Welcome}/>
+      <App/>
+        {/* <Route exact path="/" component={Welcome}/> */}
+        {/* <Route exact path="/test" component={Welcome}/> */}
 
         {/* <Route path="index">
           <Route path="option1" tableName="test" getComponent={DBTableContainer}/>
@@ -55,11 +54,11 @@ const routes = (
         <Route path="alone" component={Hello}/>
         <Route path="alone2" component={Hello}/> */}
 
-        <Route path="*" component={Error}/>
+        {/* <Route path="*" component={Error}/> */}
 
-      </Route>
+      {/* </Route> */}
       
-      <Route path="/welcome" component={Welcome}></Route>
+      {/* <Route path="/welcome" component={Welcome}/> */}
     </Router>
   </ConfigProvider>
   </Provider>

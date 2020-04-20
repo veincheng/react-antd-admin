@@ -2,6 +2,8 @@ const webpack = require('webpack');
 const globalConfig = require('./src/config.js');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 
 // 将babel-loader的配置独立出来, 因为webpack的限制: http://stackoverflow.com/questions/33117136/how-to-add-a-query-to-a-webpack-loader-with-multiple-loaders
 const babelLoaderConfig = {
@@ -41,22 +43,34 @@ module.exports = {
   },
 
   module: {
-    loaders: [  // 定义各种loader
+    rules:[
       {
         test: /\.jsx?$/,
-        loaders: ['react-hot', 'babel-loader?' + JSON.stringify(babelLoaderConfig)],  // react-hot-loader可以不用刷新页面, 如果用普通的dev-server的话会自动刷新页面
-        exclude: /node_modules/,
+        use:[{
+          loaders: [
+            'react-hot', 'babel-loader?' + JSON.stringify(babelLoaderConfig)],  // react-hot-loader可以不用刷新页面, 如果用普通的dev-server的话会自动刷新页面
+          exclude: /node_modules/
+        }]
       }, {
-        test: /\.css$/,
-        loader: 'style!css',
+        test: '/\.css$/',
+        use: ['style-loader','css-loader'],
       }, {
-        test: /\.less$/,
-        loader: 'style!css!' + `less?{"sourceMap":true,"modifyVars":${JSON.stringify(lessLoaderVars)}}`,  // 用!去链式调用loader
+        test: '/\.less$/',
+        use: ExtractTextPlugin.extract({
+          fallback:'style-loader',
+          use:['style-loader','css-loader','less-loader']
+        })
       }, {
-        test: /\.(png|jpg|svg)$/,
-        loader: 'url?limit=25000',  // 图片小于一定值的话转成base64
+        test: '/\.(png|jpg|svg)$/',
+        use:[{
+          loader: 'url-loader',
+          options:{
+            limit:50000,// 图片小于一定值的话转成base64
+            outputPath:'images'
+          }
+          }]  
       },
-    ],
+    ]
   },
 
   plugins: [
@@ -67,7 +81,7 @@ module.exports = {
     }),
     // 生成html文件
     new HtmlWebpackPlugin({
-      template: 'index.html.template',
+      template: 'public/index.html',
       title: globalConfig.name,
 
       // HtmlWebpackPlugin自己有一个favicon属性, 但用起来有点问题, 所以自己重新搞个favIcon属性
@@ -75,5 +89,6 @@ module.exports = {
       // 这个属性也是我自己定义的, dev模式下要加载一些额外的js
       devMode: true,
     }),
+    new ExtractTextPlugin('index.css')
   ],
 };

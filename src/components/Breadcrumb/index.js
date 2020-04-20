@@ -1,6 +1,6 @@
 import React from 'react';
 import {Breadcrumb} from 'antd';
-import Icon from '@ant-design/icons';
+import Icon, { HomeOutlined } from '@ant-design/icons';
 import sidebarMenu, {headerMenu} from '../../menu.js';  // 注意这种引用方式
 import Logger from '../../utils/Logger';
 import './index.less';
@@ -52,9 +52,10 @@ class Bread extends React.PureComponent {
     const itemArray = [];
 
     // 面包屑导航的最开始都是一个home图标, 并且这个图标是可以点击的
-    itemArray.push(<Item key="systemHome" href="#"><Icon type="home"/> 首页</Item>);
+    itemArray.push(<Item key="systemHome" href="#"><HomeOutlined/> 首页</Item>);
 
     // this.props.routes是react-router传进来的
+    /*
     for (const route of this.props.routes) {
       logger.debug('path=%s, route=%o', route.path, route);
       const name = this.nameMap.get(route.path);
@@ -69,6 +70,8 @@ class Bread extends React.PureComponent {
         }
       }
     }
+    */
+   console.log( itemArray);
 
     // 这个面包屑是不可点击的(除了第一级的home图标), 只是给用户一个提示
     return (

@@ -300,9 +300,9 @@ class App extends React.Component {
     }
 
     // 跳转到登录界面
-    if (!this.props.login) {
-      return <Login />;
-    }
+    // if (!this.props.login) {
+    //   return <Login />;
+    // }
 
     // 正常显示
     return (

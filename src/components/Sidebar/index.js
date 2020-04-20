@@ -19,7 +19,7 @@ const logger = Logger.getLogger('Sidebar');
 /**
  * 定义sidebar组件
  */
-class Sidebar extends React.PureComponent {
+class Sidebar extends React.Component {
 
   // 尝试把sidebar做成PureComponent, 注意可能的bug
   // 注意PureComponent的子组件也应该是pure的
