@@ -6,12 +6,12 @@ import {
   Col,
   DatePicker,
   Select,
-  Icon,
   Radio,
   InputNumber,
   Checkbox,
   Cascader
 } from 'antd';
+import  Icon from '@ant-design/icons';
 import TableUtils from './TableUtils.js';
 import moment from 'moment';
 import Logger from '../../utils/Logger';
@@ -257,7 +257,7 @@ const SchemaUtils = {
     });
 
     return this.colWrapper(getFieldDecorator => getFieldDecorator(field.key, {initialValue: field.defaultValue})(
-      <Select multiple placeholder={field.placeholder || '请选择'} size="default">
+      <Select mode="multiple" placeholder={field.placeholder || '请选择'} size="default">
         {options}
       </Select>
     ), field);

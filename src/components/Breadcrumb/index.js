@@ -1,6 +1,7 @@
 import React from 'react';
-import {Breadcrumb, Icon} from 'antd';
-import sidebarMenu, {headerMenu} from 'menu.js';  // 注意这种引用方式
+import {Breadcrumb} from 'antd';
+import Icon from '@ant-design/icons';
+import sidebarMenu, {headerMenu} from '../../menu.js';  // 注意这种引用方式
 import Logger from '../../utils/Logger';
 import './index.less';
 

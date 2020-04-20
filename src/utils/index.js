@@ -63,7 +63,7 @@ Date.prototype.plusDays = function (num) {
 // 为了克服js的一些坑...
 const Utils = {
   isString(s) {
-    return typeof(s) === 'string' || s instanceof String;
+    return typeof(s) == 'string' || s instanceof String;
   },
   // 获取url中的所有参数
   getAllQueryParams() {

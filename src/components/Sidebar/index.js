@@ -1,12 +1,13 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {Menu, Icon} from 'antd';
+import {Menu} from 'antd';
+import Icon from '@ant-design/icons';
 import Logo from '../Logo';
 import Logger from '../../utils/Logger';
-import items from 'menu.js';  // 由于webpack中的设置, 不用写完整路径
-import globalConfig from 'config.js';
+import items from '../../menu.js';  // 由于webpack中的设置, 不用写完整路径
+import globalConfig from '../../config.js';
 import './index.less';
 import {sidebarCollapseCreator} from '../../redux/Sidebar.js';
 

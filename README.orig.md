@@ -13,10 +13,23 @@
 * [一些说明](#一些说明)
 * [更多文档](docs/README.md)
 
+## 需求背景
+
+其实总结下就一句话：简化后端人员的前端开发。。。
+
+虽然俺是个java开发，但总是难免要做一些前端的东西。比如各种内部系统，各种运营后台，总要有个界面给人用的吧。如果是自己用的话当然命令行就可以将就下了。。。
+
+内部系统么，公司也不会很重视，不会有专业的前端来搞。后端人员自己搞搞，能用就行了。
+
+然而每次写前端都很痛苦，无论以前用velocity+jquery+bootstrap，还是现在用React。首先有很多重复的工作，很多后台界面其实都长得差不多；其次有时会为一些很小的需求投入很大精力，写很多业务逻辑，但这些代码都是不可复用的，感觉花这么多时间不值得，毕竟不是本职工作啊，只是个二手前端。。。甚至有时折腾css就能搞一天。。。
+
+于是就想着能否一劳永逸，搞个比较通用的东西出来，**尽量用写配置的方式替代写代码**。从某种角度上说，和[Metronic](http://keenthemes.com/preview/metronic/)/[AdminLTE](https://almsaeedstudio.com/preview)的目标有点相似。正好前段时间在研究[Ant Design](http://ant.design)，做了一些尝试，于是有了这个项目。当然并不完美，对于React和Ant Design，我也是边学边用的。
+
+首先看下，常见的后台系统都是什么样子的？
 
 ![](docs/overview.png)
 
-大部分后端系统的界面都差不多这个样子？分为几个主要的部分：
+是不是大部分后端系统的界面都差不多这个样子？分为几个主要的部分：
 
 * 侧边栏：上面是一个logo，下面是可展开的各级菜单。点击菜单项时，右边会展示相应的内容。
 * Header：展示当前登录的用户名和面包屑导航，还可能有自定义的一些菜单之类
@@ -53,21 +66,22 @@
 
 在自己的机器上调试：
 
-* 保证node版本12，npm版本6
-* clone下来后，`npm install`，安装必要的依赖
-* `npm run dev`，启动webpack-dev-server，打开浏览器`http://localhost:8080`查看效果。默认是debug模式，不会请求后端接口，所有数据都是mock的，相关配置见[src/config.js](src/config.js)
-* 如果有必要的话可以把logLevel设置为debug（见[src/config.js](src/config.js)），会输出详细的debug日志，打开chrome的console就可以看到。
+1. 保证node版本5.3+，npm版本3.3+
+2. clone下来后，`npm install`，安装必要的依赖
+3. `npm run dev`，启动webpack-dev-server，打开浏览器`http://localhost:8080`查看效果。默认是debug模式，不会请求后端接口，所有数据都是mock的，相关配置见[src/config.js](src/config.js)
+4. 如果有必要的话可以把logLevel设置为debug（见[src/config.js](src/config.js)），会输出详细的debug日志，打开chrome的console就可以看到。
 
 用在自己的项目中：
 
-*  clone下来后，`npm install`，安装必要的依赖
-* 参考[src/menu.js](src/menu.js)，按自己的需要配置侧边栏和顶部菜单
-* 修改[src/index.js](src/index.js)中的路由表，保证和menu.js中的菜单项一致，否则可能404
-* 如果要用DBTable组件的话，参考[src/schema](src/schema)下的例子，编写自己的querySchema和dataSchema文件。在路由表中配置DBTable组件时，要把表名作为props传入，类似`<Route path="option1" tableName="test" component={DBTable}/>`。
-* 修改[src/config.js](src/config.js)中相关配置，比如项目名、footer、单点登录等等。
-* `npm run prod`，编译js文件，然后将dist目录下的所有js/css/html文件拷贝到自己的工程中，前端的工作就完成了。一般会有一个index.html，一个bundle.min.css，以及多个js文件，跟是否使用动态路由有关。
-. 开发后端接口，接口规范见[这里](docs/Ajax.md)。如果是java后端，可以使用[这个工具](https://github.com/jiangxy/react-java-goos)帮你生成。
-* 启动你的web服务，访问`index.html`查看效果。
+1. 保证node版本5.3+，npm版本3.3+
+2. clone下来后，`npm install`，安装必要的依赖
+3. 参考[src/menu.js](src/menu.js)，按自己的需要配置侧边栏和顶部菜单
+4. 修改[src/index.js](src/index.js)中的路由表，保证和menu.js中的菜单项一致，否则可能404
+5. 如果要用DBTable组件的话，参考[src/schema](src/schema)下的例子，编写自己的querySchema和dataSchema文件。在路由表中配置DBTable组件时，要把表名作为props传入，类似`<Route path="option1" tableName="test" component={DBTable}/>`。
+6. 修改[src/config.js](src/config.js)中相关配置，比如项目名、footer、单点登录等等。
+7. `npm run prod`，编译js文件，然后将dist目录下的所有js/css/html文件拷贝到自己的工程中，前端的工作就完成了。一般会有一个index.html，一个bundle.min.css，以及多个js文件，跟是否使用动态路由有关。
+8. 开发后端接口，接口规范见[这里](docs/Ajax.md)。如果是java后端，可以使用[这个工具](https://github.com/jiangxy/react-java-goos)帮你生成。
+9. 启动你的web服务，访问`index.html`查看效果。
 
 其他一些命令:
 
@@ -95,8 +109,3 @@
 单页应用的首屏渲染一直都是个大问题。webpack打包出来的bundle.js一般都很大，虽然我想了很多办法去优化，但总是还会有1M多，实在减不下去了。。。所以应用到外网时要小心，初次加载时可能比较慢。
 
 内网的话就无所谓了，一般网速都不是问题。
-
-### 依赖配件升级
-
-webpack更新到v4.0以上
-

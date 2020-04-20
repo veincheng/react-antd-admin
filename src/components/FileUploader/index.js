@@ -1,5 +1,6 @@
 import React from 'react';
-import {Upload, Icon, Modal, message, Button, Tooltip} from 'antd';
+import {Upload,  Modal, message, Button, Tooltip} from 'antd';
+import Icon from '@ant-design/icons';
 import globalConfig from '../../config.js';
 import Utils from '../../utils';
 import Logger from '../../utils/Logger.js';

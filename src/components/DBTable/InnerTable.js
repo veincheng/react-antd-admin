@@ -2,12 +2,12 @@ import React from 'react';
 import {
   Button,
   Table,
-  Icon,
   Modal,
   message,
   notification,
   Affix
 } from 'antd';
+import   Icon from '@ant-design/icons';
 import Logger from '../../utils/Logger';
 import Utils from '../../utils';
 import ajax from '../../utils/ajax';

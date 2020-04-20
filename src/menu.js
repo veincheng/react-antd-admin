@@ -6,9 +6,8 @@
  * 2.只有"叶子"节点才能跳转;
  * 3.所有的key都不能重复;
  */
+//图标需要替换成
 
-// 其实理论上可以嵌套更多层菜单的, 但是我觉得超过3层就不好看了
-// 可用的图标见这里: https://ant.design/components/icon-cn/
 
 // 定义siderbar菜单
 const sidebarMenu = [

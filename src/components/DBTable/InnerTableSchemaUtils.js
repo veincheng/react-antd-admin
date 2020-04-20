@@ -257,7 +257,7 @@ const SchemaUtils = {
     if (field.primary === true) {
       logger.debug('key %o is primary, transform to text area', field);
       return this.colWrapper((getFieldDecorator, forUpdate) => getFieldDecorator(field.key)(
-        <Input type="textarea" autosize={{ minRows: 1, maxRows: 10 }} disabled size="default"/>
+        <textarea autosize={{ minRows: 1, maxRows: 10 }} disabled size="default"/>
       ), field);
     }
 
@@ -364,7 +364,7 @@ const SchemaUtils = {
       initialValue: forUpdate ? undefined : field.defaultValue,
       rules: forUpdate ? field.$$updateValidator : field.validator,
     })(
-      <Select multiple placeholder={field.placeholder || '请选择'} size="default" disabled={field.disabled}>
+      <Select mode="multiple" placeholder={field.placeholder || '请选择'} size="default" disabled={field.disabled}>
         {options}
       </Select>
     ), field);

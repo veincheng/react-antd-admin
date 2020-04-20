@@ -1,5 +1,5 @@
 import React from 'react';
-import {Icon} from 'antd';
+import Icon from '@ant-design/icons';
 
 // 定义某个表的querySchema
 // schema的结构和含义参考下面的例子

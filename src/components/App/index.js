@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux'
-import {Spin, message, Tabs, Icon} from 'antd';
+import {Spin, message, Tabs} from 'antd';
+import Icon from '@ant-design/icons';
 import Header from '../Header';
 import Footer from '../Footer';
 import Sidebar from '../Sidebar';
@@ -10,7 +11,7 @@ import Login from '../Login';
 import Breadcrumb from '../Breadcrumb';
 import Welcome from '../Welcome';
 import './index.less';
-import globalConfig from 'config.js';
+import globalConfig from '../../config.js';
 import ajax from '../../utils/ajax';
 import Logger from '../../utils/Logger';
 import sidebarMenu, {headerMenu} from '../../menu.js';
@@ -90,7 +91,9 @@ class App extends React.Component {
         if (res.success && !globalConfig.debug) {
           // 这里不需要setState了, 因为setState的目的是为了re-render, 而下一句会触发redux的状态变化, 也会re-render
           // 所以直接修改状态, 就是感觉这么做有点奇怪...
-          this.state.tryingLogin = false;
+          this.setState({
+            tryingLogin : false
+          });
           // App组件也可能触发loginSuccess action
           this.props.handleLoginSuccess(res.data);
         } else {
@@ -115,14 +118,15 @@ class App extends React.Component {
     } else {
       message.error(errorMsg);
       logger.debug('not login, redirect to Login component');
-      this.setState({tryingLogin: false});
+      this.setState({
+        tryingLogin: false
+      }
+      );
     }
   }
 
 
   // 下面开始是tab相关逻辑
-
-
   /**
    * 解析menu.js中的配置, 找到所有叶子节点对应的key和名称
    *
@@ -169,7 +173,9 @@ class App extends React.Component {
 
     // 如果key有问题, 就直接隐藏所有tab, 这样简单点
     if (!key || !this.tabTitleMap.has(key)) {
-      this.state.tabPanes.length = 0;
+      this.setState({
+        tabPanes:[]
+      });
       return;
     }
 
@@ -186,7 +192,9 @@ class App extends React.Component {
     }
 
     // 更新当前选中的tab
-    this.state.currentTabKey = key;
+    this.setState({
+      currentTabKey : key
+    });
 
     // 当前key对应的tab是否已经在显示了?
     let exist = false;
@@ -199,12 +207,15 @@ class App extends React.Component {
 
     // 如果key不存在就要新增一个tabPane
     if (!exist) {
-      this.state.tabPanes.push({
+      let newTabPanes = this.state.tabPanes.push({
         key,
         title: tabTitle,
         //content: React.cloneElement(props.children),  // 我本来是想clone一下children的, 这样比较保险, 不同tab不会互相干扰, 但发现似乎不clone也没啥bug
         content: props.children,
       });
+      this.setState({
+         tabPanes : newTabPanes
+      })
     }
   }
 

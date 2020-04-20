@@ -99,17 +99,17 @@ const RenderUtils = {
   getFileRender(text) {
     if (Utils.isString(text) && text.length > 0) {
       // 单个文件, 显示为超链接
-      return <a href={text} target="_blank">{text.substr(text.lastIndexOf('/') + 1)}</a>;
+      return <a href={text} target="_blank" rel="noopener noreferrer">{text.substr(text.lastIndexOf('/') + 1)}</a>;
     } else if (text instanceof Array) {
       if (text.length === 0) {
         return null;
       }
       // 多个文件, 显示为一组超链接
       const urlArray = [];
-      urlArray.push(<a key={0} href={text[0]} target="_blank">{text[0].substr(text[0].lastIndexOf('/') + 1)}</a>);
+      urlArray.push(<a key={0} href={text[0]} target="_blank" rel="noopener noreferrer">{text[0].substr(text[0].lastIndexOf('/') + 1)}</a>);
       for (let i = 1; i < text.length; i++) {
         urlArray.push(<br key={ -1 - i }/>);
-        urlArray.push(<a key={i} href={text[i]} target="_blank">{text[i].substr(text[i].lastIndexOf('/') + 1)}</a>);
+        urlArray.push(<a key={i} href={text[i]} target="_blank" rel="noopener noreferrer">{text[i].substr(text[i].lastIndexOf('/') + 1)}</a>);
       }
       return <div>{urlArray}</div>;
     }

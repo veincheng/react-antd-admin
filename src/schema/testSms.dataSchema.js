@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 
 module.exports = [
   {
@@ -84,7 +84,7 @@ module.exports = [
     dataType: 'varchar',
     validator: [{type: 'email', required: true, message: '邮箱地址有误'}],
     // 跳转邮箱地址例子
-    render: (text) => <a href="mailto:foolbeargm@gmail.com" target="_blank">{'foolbeargm@gmail.com'}</a>,
+    render: (text) => <a href="mailto:foolbeargm@gmail.com" rel="noopener noreferrer" target="_blank">{'foolbeargm@gmail.com'}</a>,
   },
   {
     key: 'phoneModel',

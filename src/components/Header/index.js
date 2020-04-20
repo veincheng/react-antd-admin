@@ -1,10 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router';
-import {Icon, Menu} from 'antd';
+import {Link} from 'react-router-dom';
+import { Menu} from 'antd';
+import Icon from '@ant-design/icons';
 import Logger from '../../utils/Logger';
-import globalConfig from 'config';
+import globalConfig from '../../config';
 import './index.less';
-import {headerMenu} from 'menu';
+import {headerMenu} from '../../menu';
 
 const SubMenu = Menu.SubMenu;  // 为了使用方便
 const MenuItem = Menu.Item;
@@ -26,7 +27,7 @@ class Header extends React.PureComponent {
     return (
       <MenuItem key={obj.key}>
         {obj.icon && <Icon type={obj.icon}/>}
-        {obj.url ? <a target="_blank" href={obj.url}>{obj.name}</a> : <Link to={`/${parentPath}`}>{obj.name}</Link>}
+        {obj.url ? <a target="_blank" rel="noopener noreferrer" href={obj.url}>{obj.name}</a> : <Link to={`/${parentPath}`}>{obj.name}</Link>}
       </MenuItem>
     );
   }

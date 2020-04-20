@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Icon,
   Row,
   Col,
   Button,
@@ -8,7 +7,8 @@ import {
   Upload,
   notification
 } from 'antd';
-import globalConfig from 'config.js';
+import Icon from '@ant-design/icons';
+import globalConfig from '../../config.js';
 import moment from 'moment';  // antd@2.0之后, 日期相关的都变成moment对象了, 以前是Date对象
 import FormSchemaUtils from './InnerFormSchemaUtils';
 import Utils from '../../utils';

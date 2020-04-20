@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import {UpdateGPA1, UpdateGPA2} from '../components/UpdateComponentDemo';
 
 module.exports = [
@@ -87,7 +87,7 @@ module.exports = [
       {
         // 如果不是预定义的type(update/delete/newLine/component), 就检查是否有render函数
         // 有render函数就直接执行
-        render: (record) => <a href={`http://jxy.me?id=${record.id}`} target="_blank">{'跳转url'}</a>,
+        render: (record) => <a href={`http://jxy.me?id=${record.id}`} target="_blank" rel="noopener noreferrer" >{'跳转url'}</a>,
       },
       {
         // react-router的Link组件

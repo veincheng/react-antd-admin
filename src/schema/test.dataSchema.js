@@ -1,5 +1,5 @@
 import React from 'react';
-import {Icon} from 'antd';
+import Icon from '@ant-design/icons';
 
 // 定义某个表的dataSchema, 结构跟querySchema很相似, 见下面的例子
 // 注意: 所有的key不能重复
