@@ -5,7 +5,7 @@ import InnerForm from './InnerForm.js';
 import InnerTable from './InnerTable.js';
 import InnerPagination from './InnerPagination.js';
 import TableUtils from './TableUtils.js';
-import './index.less';
+import './index.scss';
 import ajax from '../../utils/ajax';
 import Utils from '../../utils';
 import globalConfig from '../../config.js';

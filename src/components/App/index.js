@@ -10,7 +10,7 @@ import Sidebar from '../Sidebar';
 import Login from '../Login';
 import Breadcrumb from '../Breadcrumb';
 import Welcome from '../Welcome';
-import './index.less';
+import './index.scss';
 import globalConfig from '../../config.js';
 import ajax from '../../utils/ajax';
 import Logger from '../../utils/Logger';
@@ -262,11 +262,6 @@ class App extends React.Component {
    * 渲染界面右侧主要的操作区
    */
   renderBody() {
-    // 我本来是在jsx表达式中判断globalConfig.tabMode.enable的, 比如{globalConfig.tabMode.enable && XXX}
-    // 后来想会不会拿到外面去判断好些, webpack会不会把这个语句优化掉? 好像有一些类似的机制
-    // 因为在编译的时候, globalConfig.tabMode.enable的值已经是确定的了, 下面的if-else其实是可以优化的
-    // 如果是jsx表达式那种写法, 感觉不太可能优化
-
     // tab模式下, 不显示面包屑
     if (globalConfig.tabMode.enable === true) {
       // 如果没有tab可以显示, 就显示欢迎界面

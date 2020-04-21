@@ -8,7 +8,7 @@ import Logo from '../Logo';
 import Logger from '../../utils/Logger';
 import items from '../../menu.js';  // 由于webpack中的设置, 不用写完整路径
 import globalConfig from '../../config.js';
-import './index.less';
+import './index.scss';
 import {sidebarCollapseCreator} from '../../redux/Sidebar.js';
 
 const SubMenu = Menu.SubMenu;

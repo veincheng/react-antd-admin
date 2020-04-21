@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.less';
+import './index.scss';
 
 /**
  * 展示欢迎界面

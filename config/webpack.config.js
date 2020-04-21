@@ -488,32 +488,32 @@ module.exports = function(webpackEnv) {
                 'sass-loader'
               ),
             },
-            //add lesscss supported
-            {
-              test: /\.(le|c)ss$/i,
-              use: [
-                isEnvProduction
-                  ? {
-                      loader: MiniCssExtractPlugin.loader,
-                    }
-                  : 'style-loader',
-                {
-                  loader: 'css-loader',
-                  options: {
-                    modules: {
-                      localIdentName: isEnvProduction ? '[hash:base64]' : '[path][name]__[local]--[hash:base64:5]',
-                    },
-                  },
-                },
-                {
-                  loader: 'less-loader',
-                  options: {
-                    javascriptEnabled: true,
-                  },
-                },
-              ].filter(Boolean),
-              include: paths.appSrc,
-            },
+            // //add lesscss supported
+            // {
+            //   test: /\.(le|c)ss$/i,
+            //   use: [
+            //     isEnvProduction
+            //       ? {
+            //           loader: MiniCssExtractPlugin.loader,
+            //         }
+            //       : 'style-loader',
+            //     {
+            //       loader: 'css-loader',
+            //       options: {
+            //         modules: {
+            //           localIdentName: isEnvProduction ? '[hash:base64]' : '[path][name]__[local]--[hash:base64:5]',
+            //         },
+            //       },
+            //     },
+            //     {
+            //       loader: 'less-loader',
+            //       options: {
+            //         javascriptEnabled: true,
+            //       },
+            //     },
+            //   ].filter(Boolean),
+            //   include: paths.appSrc,
+            // },
 
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.

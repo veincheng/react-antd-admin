@@ -1,10 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import { Menu} from 'antd';
-import Icon from '@ant-design/icons';
+import Icon, { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import Logger from '../../utils/Logger';
 import globalConfig from '../../config';
-import './index.less';
+import './index.scss';
 import {headerMenu} from '../../menu';
 
 const SubMenu = Menu.SubMenu;  // 为了使用方便
@@ -37,7 +37,7 @@ class Header extends React.PureComponent {
 
     // 这一项菜单是必须有的, 不需要在配置文件里配置
     const logoutMenuItem = <MenuItem key="logout">
-      <Icon type="logout"/>
+      <LogoutOutlined/>
       <a href={`${globalConfig.getAPIPath()}${globalConfig.login.logout}`}>注销</a>
     </MenuItem>;
 
@@ -103,7 +103,7 @@ class Header extends React.PureComponent {
 
     // 注意用户菜单的最后一项必定是注销
     const userMenu = (
-      <SubMenu title={<span><Icon type="user" />{this.props.userName}</span>}>
+      <SubMenu title={<span><UserOutlined/>{this.props.userName}</span>}>
         {userMenuItems && userMenuItems[0] ? userMenuItems : null}
         <Menu.Divider />
         {logoutMenuItem}
@@ -113,18 +113,15 @@ class Header extends React.PureComponent {
     this.userMenu = userMenu;
   }
 
-  // FIXME: 这里其实有个bug, 如果菜单名称很长可能会导致overflow, 出现滚动条
-  // 暂时无法解决..., 怎么调css都不对
-
   render() {
     return (
-      <div className="ant-layout-header">
+      <div>
         {/*定义header中的菜单, 从右向左依次是注销/用户菜单/其他自定义菜单*/}
         <Menu className="header-menu" mode="horizontal">
-          {this.userMenu}
+          {/* {this.userMenu} */}
           {this.menu}
         </Menu>
-      </div>
+        </div>
     );
   }
 

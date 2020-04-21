@@ -1,6 +1,6 @@
 import React from 'react';
 import {FrownOutlined} from '@ant-design/icons';
-import './index.less';
+import './index.scss';
 
 /**
  * 显示错误信息

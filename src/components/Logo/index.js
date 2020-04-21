@@ -1,6 +1,6 @@
 import React from 'react';
 import globalConfig from '../../config.js';
-import './index.less';
+import './index.scss';
 
 /**
  * 定义Logo组件

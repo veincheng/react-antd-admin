@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.less';
+import './index.scss';
 
 /**
  * 图片走马灯, 基本是抄的这个: https://github.com/xiaolin/react-image-gallery

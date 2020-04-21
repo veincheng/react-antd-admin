@@ -3,7 +3,7 @@ import {Breadcrumb} from 'antd';
 import Icon, { HomeOutlined } from '@ant-design/icons';
 import sidebarMenu, {headerMenu} from '../../menu.js';  // 注意这种引用方式
 import Logger from '../../utils/Logger';
-import './index.less';
+import './index.scss';
 
 const Item = Breadcrumb.Item;
 const logger = Logger.getLogger('Breadcrumb');
@@ -75,7 +75,7 @@ class Bread extends React.PureComponent {
 
     // 这个面包屑是不可点击的(除了第一级的home图标), 只是给用户一个提示
     return (
-      <div className="ant-layout-breadcrumb">
+      <div>
         <Breadcrumb>{itemArray}</Breadcrumb>
       </div>
     );

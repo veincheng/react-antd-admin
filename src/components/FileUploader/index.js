@@ -4,7 +4,7 @@ import Icon from '@ant-design/icons';
 import globalConfig from '../../config.js';
 import Utils from '../../utils';
 import Logger from '../../utils/Logger.js';
-import './index.less';
+import './index.scss';
 
 const logger = Logger.getLogger('FileUploader');
 

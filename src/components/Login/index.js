@@ -5,7 +5,7 @@ import globalConfig from '../../config';
 import ajax from '../../utils/ajax';
 import Logger from '../../utils/Logger';
 import {Form,Input,Button,message} from 'antd';
-import './index.less';
+import './index.scss';
 import {loginSuccessCreator} from '../../redux/Login.js';
 
 const logger = Logger.getLogger('Login');
