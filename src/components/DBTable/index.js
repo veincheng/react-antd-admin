@@ -58,20 +58,6 @@ class DBTable extends React.PureComponent {
   //     this.setState({loadingSchema: false}, this.refresh);
   //   }
   // }
-  // 注意其中的tryFetchSchema可能同步也可能异步
-  // 我本来期望着如果是同步调用的话, 下面的updateTableState语句会立刻执行, 如果是异步调用, 就等异步操作结束后再执行updateTableState
-  // 但实际情况是, 即使是同步调用(直接返回一个resolved状态的promise), 下面的代码也不会立刻执行
-  // 这可能和async函数的特性有关, 即使直接return一个常量, 也会被当作异步操作对待
-  // async/await语义只保证语句的"执行顺序", 而不保证执行的"间隔"
-  // 同理, 各种回调都是不能保证事件发生后"立即"被执行的, 这是js event loop的局限, 也许应该说是"特性"?
-
-  // 于是我只能改成下面这种普通的callback方式, 手动控制何时执行callback, 不能用async/await了
-  // 如果是同步操作就立刻执行callback, 否则等异步操作结束再执行callback
-
-  // 另一个有意思的问题就是, 如果将react的生命周期方法做成async的会怎样?
-  // 关键要了解async函数的执行逻辑, 尤其是多个async函数嵌套时, 了解代码执行权的交换过程
-  // 如果知道async/await的本质就是生成器, 而生成器的本质就是协程, 那就很好理解了
-
 
   componentWillMount() {
     // 处理url参数

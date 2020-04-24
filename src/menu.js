@@ -13,7 +13,7 @@
 const sidebarMenu = [
   {
     key: 'index',  // route时url中的值
-    name: '菜单哈哈哈',  // 在菜单中显示的名称
+    name: '正常菜单',  // 在菜单中显示的名称
     icon: 'smile',  // 图标是可选的
     child: [
       {
@@ -35,16 +35,16 @@ const sidebarMenu = [
   },
   {
     key: 'alone',
-    name: '我没有子菜单',
+    name: '无子项',
     icon: 'clock-circle',
   },
   {
     key: 'alone2',
-    name: '我没有图标',
+    name: '无图标无子项',
   },
   {
     key: 'noiconhaha',
-    name: '又一个没图标的',
+    name: '无图标一级',
     child: [
       {
         key: 'nesnesnes',

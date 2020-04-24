@@ -706,9 +706,9 @@ class InnerTable extends React.PureComponent {
         </div>
 
         {/*用于图片预览的modal*/}
-        <Modal visible={this.state.previewVisible} footer={null} onCancel={this.cancelPreview}>
+        {/* <Modal visible={this.state.previewVisible} footer={null} onCancel={this.cancelPreview}>
           <ImageSlider items={this.state.previewImages}/>
-        </Modal>
+        </Modal> */}
 
         {/*用于显示用户自定义组件的modal*/}
         <Modal title={this.updateComponentModalTitle} visible={this.state.componentModalVisible}

@@ -59,6 +59,7 @@ class App extends React.Component {
    */
   componentWillReceiveProps(nextProps) {
     // 如果不是tab模式直接返回
+    /*
     if (globalConfig.tabMode.enable !== true) {
       return;
     }
@@ -73,6 +74,7 @@ class App extends React.Component {
     if (this.props.collapse === nextProps.collapse) {
       this.updateTab(nextProps);
     }
+    */
   }
 
   /**
@@ -278,6 +280,7 @@ class App extends React.Component {
     }
     // 非tab模式, 显示面包屑和对应的组件
     else {
+      console.log(this.props);
       return <div>
         <Breadcrumb routes={this.props.routes}/>
         <div className="ant-layout-container">
@@ -290,9 +293,9 @@ class App extends React.Component {
 
   render() {
     // 显示一个加载中
-    if (this.state.tryingLogin) {
-      return <div className="center-div"><Spin spinning={true} size="large"/></div>;
-    }
+    // if (this.state.tryingLogin) {
+    //   return <div className="center-div"><Spin spinning={true} size="large"/></div>;
+    // }
 
     // 跳转到登录界面
     // if (!this.props.login) {
