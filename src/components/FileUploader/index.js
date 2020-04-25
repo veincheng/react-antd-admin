@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import {Upload,  Modal, message, Button, Tooltip} from 'antd';
 import Icon from '@ant-design/icons';
 import globalConfig from '../../config.js';
@@ -343,21 +344,21 @@ class FileUploader extends React.Component {
 }
 
 FileUploader.propTypes = {
-  max: React.PropTypes.number.isRequired,  // 最多可以上传文件数量
-  sizeLimit: React.PropTypes.number,  // 大小限制, 单位KB
-  onChange: React.PropTypes.func,  // 上传后的回调函数
-  defaultValue: React.PropTypes.oneOfType([  // 默认值, 可以是单个文件, 也可以是一组文件
-    React.PropTypes.string,
-    React.PropTypes.array,
+  max: PropTypes.number.isRequired,  // 最多可以上传文件数量
+  sizeLimit: PropTypes.number,  // 大小限制, 单位KB
+  onChange: PropTypes.func,  // 上传后的回调函数
+  defaultValue: PropTypes.oneOfType([  // 默认值, 可以是单个文件, 也可以是一组文件
+    PropTypes.string,
+    PropTypes.array,
   ]),
-  value: React.PropTypes.oneOfType([  // 受控组件
-    React.PropTypes.string,
-    React.PropTypes.array,
+  value: PropTypes.oneOfType([  // 受控组件
+    PropTypes.string,
+    PropTypes.array,
   ]),
-  url: React.PropTypes.string,  // 自定义上传接口
-  type: React.PropTypes.string,  // type=image表示上传图片, 否则上传普通文件
-  accept: React.PropTypes.string,  // 上传时允许选择的文件类型, 例子:".jpg,.png,.gif"
-  placeholder: React.PropTypes.string,  // 提示语
+  url: PropTypes.string,  // 自定义上传接口
+  type: PropTypes.string,  // type=image表示上传图片, 否则上传普通文件
+  accept: PropTypes.string,  // 上传时允许选择的文件类型, 例子:".jpg,.png,.gif"
+  placeholder: PropTypes.string,  // 提示语
 };
 
 FileUploader.defaultProps = {

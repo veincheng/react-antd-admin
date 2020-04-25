@@ -63,6 +63,7 @@ class DBTable extends React.PureComponent {
     // 处理url参数
     this.processQueryParams();
     // 组件初始化时尝试获取schema
+    console.log( this.props);
     this.tryFetchSchema(this.props, (res) => {
       this.updateTableState(res);
       // 这个参数用于判断获取schema是同步还是异步
@@ -139,6 +140,7 @@ class DBTable extends React.PureComponent {
    * @returns {undefined}
    */
   async tryFetchSchema(props, callback) {
+    console.log( props) ;
     const routes = props.routes;
     // 这个tableName是路由表配置中传过来的
     // 可以用这个方法向组件传值
@@ -357,6 +359,15 @@ class DBTable extends React.PureComponent {
     // FIXME: 这段代码非常丑, (!this.inited && !this.errorMsg)这个条件是为了hack一个react-router的问题
     // 如果从首页点击侧边栏进入DBTable组件, 会依次触发componentWillMount和componentWillReceiveProps, 而直接从url进入的话则只会触发componentWillMount
     // 感觉react-router坑好多啊
+    // <div style={{ height: '150px', width: '100%' }}></div>
+      // <Spin tip="loading schema..." spinning={this.state.loadingSchema} delay={500}>
+      // </Spin>
+
+    return (
+      <h2></h2>
+    );
+
+      /*
     if (this.state.loadingSchema && (!this.notFirstRender || (!this.inited && !this.errorMsg))) {
       this.notFirstRender = true;
       return (
@@ -392,9 +403,10 @@ class DBTable extends React.PureComponent {
                          parentHandlePageChange={this.handlePageChange} tableConfig={this.tableConfig}
                          showSizeChanger={this.state.showSizeChanger} pageSizeOptions={this.state.pageSizeOptions}
                          parentHandleShowPageChange={this.handleShowPageChange}
-                         tableName={this.tableName}/>
+                         tableName={this.tableName}/> 
       </Spin>
     );
+    */
   }
 
 }

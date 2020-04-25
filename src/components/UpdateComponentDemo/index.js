@@ -35,7 +35,7 @@ class UpdateGPA1 extends React.PureComponent {
   }
 
   render() {
-    return (
+    return 
       <Row>
         <Col span={12}>
           <Slider min={0.0} max={10.0} onChange={this.onChange} value={this.state.inputValue} step={0.01}/>
@@ -45,7 +45,6 @@ class UpdateGPA1 extends React.PureComponent {
                        onChange={this.onChange}/>
         </Col>
       </Row>
-    );
   }
 }
 
@@ -74,11 +73,10 @@ class UpdateGPA2 extends React.PureComponent {
   }
 
   render() {
-    return (
+    return 
       <span>
         <Rate count={10} allowHalf onChange={this.onChange} value={this.state.inputValue}/>
       </span>
-    );
   }
 }
 

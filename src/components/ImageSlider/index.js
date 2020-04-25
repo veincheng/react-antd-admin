@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './index.scss';
 
 /**
@@ -255,7 +256,7 @@ class ImageSlider extends React.PureComponent {
 
 ImageSlider.propTypes = {
   // 要显示的图片数组, 例子: [{url:aaa, alt:bbb, description:ccc}]
-  items: React.PropTypes.array.isRequired,
+  items: PropTypes.array.isRequired,
 };
 
 ImageSlider.defaultProps = {

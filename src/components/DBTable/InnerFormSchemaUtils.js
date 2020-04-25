@@ -91,7 +91,7 @@ const SchemaUtils = {
       },
     });
     // 注意要再用antd的create()方法包装下
-    return Form.create()(tmpComponent);
+    return tmpComponent;
   },
 
   /**
