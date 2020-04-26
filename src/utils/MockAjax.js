@@ -47,7 +47,7 @@ const mockResult = (tableName, queryObj) => {
   for (let i = 0; i < queryObj.pageSize; i++) {
     const record = {};
     // 为了让mock的数据有些区别, 把page算进去
-    schema.forEach((column) => {
+    schema.default.forEach((column) => {
       // 对于自定义操作列, 无需mock数据
       if (column.key === ACTION_KEY) {
         return;

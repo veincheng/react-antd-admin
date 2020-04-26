@@ -141,10 +141,11 @@ class DBTable extends React.PureComponent {
    */
   async tryFetchSchema(props, callback) {
     console.log( props) ;
-    const routes = props.routes;
+    // const routes = props.routes;
     // 这个tableName是路由表配置中传过来的
     // 可以用这个方法向组件传值
-    const tableName = routes.pop().tableName;
+    const tableName = "test";
+    // const tableName = routes.pop().tableName;
     if (tableName) {
       logger.info('init component DBTable with tableName = %s', tableName);
     } else {
@@ -155,7 +156,7 @@ class DBTable extends React.PureComponent {
     }
 
     const tableConfig = TableUtils.getTableConfig(tableName);
-
+    // console.debug( tableConfig);
     // 这里注意, 区分同步/异步
     let tmp = TableUtils.getCacheSchema(tableName);
     if (!tmp) {
@@ -181,7 +182,7 @@ class DBTable extends React.PureComponent {
   updateTableState(input) {
     // 其实很多这种this.xxx变量也可以做成状态, 看情况了
     // 关键是这些变量变化时, 是否要触发重新render?
-
+    console.log(input);
     // 这两项是肯定会有的
     this.tableName = input.tableName;
     this.tableConfig = input.tableConfig;
@@ -363,11 +364,11 @@ class DBTable extends React.PureComponent {
       // <Spin tip="loading schema..." spinning={this.state.loadingSchema} delay={500}>
       // </Spin>
 
-    return (
-      <h2></h2>
-    );
+    // return (
+    //   <h2>hello</h2>
+    // );
 
-      /*
+     
     if (this.state.loadingSchema && (!this.notFirstRender || (!this.inited && !this.errorMsg))) {
       this.notFirstRender = true;
       return (
@@ -406,7 +407,7 @@ class DBTable extends React.PureComponent {
                          tableName={this.tableName}/> 
       </Spin>
     );
-    */
+    /**/
   }
 
 }

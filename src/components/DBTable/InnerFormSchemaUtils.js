@@ -11,7 +11,6 @@ import {
   Checkbox,
   Cascader
 } from 'antd';
-import  Icon from '@ant-design/icons';
 import TableUtils from './TableUtils.js';
 import moment from 'moment';
 import Logger from '../../utils/Logger';
@@ -72,7 +71,7 @@ const SchemaUtils = {
     const that = this;
     // 如何动态生成一个组件? 如果用class的写法, 似乎不行...
     // 只能用传统的ES5的写法, 函数式组件应该也可以, 但是我需要生命周期相关方法
-    const tmpComponent = React.createClass({
+    return class tmpComponent extends React.Component{
       componentWillMount() {
         // 组件初始化时读取schema
         if (schemaMap.has(tableName)) {
@@ -84,21 +83,20 @@ const SchemaUtils = {
           schemaMap.set(tableName, schemaCallback);
         }
         this.schemaCallback = schemaCallback;
-      },
+      };
       render() {
-        // render的时候传入getFieldDecorator, 生成最终的jsx元素
-        return this.schemaCallback(this.props.form.getFieldDecorator);
-      },
-    });
-    // 注意要再用antd的create()方法包装下
-    return tmpComponent;
+        // console.error("callback", this.schemaCallback)
+        // const [form] = Form.useForm()
+        return this.schemaCallback;
+      };
+    };
   },
 
   /**
    * 解析表单的schema
    *
    * @param schema 直接从tableName.querySchema.js文件中读出来的schema
-   * @returns {function()} 一个函数, 这个函数的参数是getFieldDecorator, 执行后才会返回真正的jsx元素, 为啥不直接返回jsx元素而要返回函数呢, 因为antd的表单的限制, 想生成最终的元素必须要getFieldDecorator
+   * @returns {Array[]}
    */
   parse(schema) {
     // 用这两个变量去代表一个表单的schema
@@ -108,7 +106,8 @@ const SchemaUtils = {
     // 参见antd的布局, 每行被分为24个格子
     // 普通的字段每个占用8格, between类型的字段每个占用16格
     let spaceLeft = 24;
-    schema.forEach((field) => {
+    // console.log( schema);
+    schema.default.forEach((field) => {
       // 当前列需要占用几个格子? 普通的都是8, 只有datetime between是16
       let spaceNeed = 8;
       if (field.showType === 'between' && field.dataType === 'datetime') {
@@ -156,34 +155,34 @@ const SchemaUtils = {
 
     // 至此, schema解析完毕, 接下来是回调函数
     // 这里有一点闭包的概念
-    return getFieldDecorator => {
-      const formRows = []; // 最终的表单中的一行
+    const formRows = []; // 最终的表单中的一行
       for (let i = 0; i < rows.length; i++) {
         const formCols = [];  // 最终的表单中的一列
         for (const col of rows[i]) {
-          formCols.push(col(getFieldDecorator));  // 注意这里的col是一个函数
+          formCols.push(col);  // 注意这里的col是一个函数
         }
         formRows.push(<Row key={i} gutter={16}>{formCols}</Row>);
       }
 
-      return (<Form horizontal>
+      return (
+      <Form horizontal>
         {formRows}
-      </Form>);
-    };
+      </Form>
+      )
   },
 
   /**
    * 辅助函数, 将一个input元素包装下
    *
-   * @param formItem 一个callback, 以getFieldDecorator为参数, 执行后返回对应的表单项, input/select之类的
+   * @param formItem 
    * @param field schema中的一列
    */
   colWrapper(formItem, field) {
-    return getFieldDecorator => (
+    return (
       <Col key={field.key} sm={8}>
-        <FormItem key={field.key} label={field.title} labelCol={{ span: 10 }} wrapperCol={{ span: 14 }}>
-          {formItem(getFieldDecorator)}
-        </FormItem>
+        <Form.Item key={field.key} label={field.title} labelCol={{ span: 10 }} wrapperCol={{ span: 14 }}>
+          {formItem}
+        </Form.Item>
       </Col>
     );
   },
@@ -200,10 +199,13 @@ const SchemaUtils = {
       options.push(<Option key={option.key} value={option.key}>{option.value}</Option>);
     });
 
-    return this.colWrapper(getFieldDecorator => getFieldDecorator(field.key, {initialValue: field.defaultValue})(
+    return this.colWrapper(
+      (
+      <Form.Item name={field.key}  defaultValue={field.defaultValue}>
       <Select placeholder={field.placeholder || '请选择'} size="default">
         {options}
       </Select>
+    </Form.Item>
     ), field);
   },
 
@@ -219,10 +221,13 @@ const SchemaUtils = {
       options.push(<Radio key={option.key} value={option.key}>{option.value}</Radio>);
     });
 
-    return this.colWrapper(getFieldDecorator => getFieldDecorator(field.key, {initialValue: field.defaultValue})(
+    return this.colWrapper(
+      (
+      <Form.Item name={field.key} defaultValue={field.defaultValue}>
       <RadioGroup>
         {options}
       </RadioGroup>
+      </Form.Item>
     ), field);
   },
 
@@ -238,8 +243,12 @@ const SchemaUtils = {
       options.push({label: option.value, value: option.key});
     });
 
-    return this.colWrapper(getFieldDecorator => getFieldDecorator(field.key, {initialValue: field.defaultValue})(
-      <CheckboxGroup options={options}/>
+    return this.colWrapper(
+      (
+      <Form.Item name={field.key}  defaultValue={field.defaultValue}>
+        <CheckboxGroup options={options}/>
+
+      </Form.Item>
     ), field);
   },
 
@@ -256,10 +265,14 @@ const SchemaUtils = {
       options.push(<Option key={option.key} value={option.key}>{option.value}</Option>);
     });
 
-    return this.colWrapper(getFieldDecorator => getFieldDecorator(field.key, {initialValue: field.defaultValue})(
-      <Select mode="multiple" placeholder={field.placeholder || '请选择'} size="default">
-        {options}
-      </Select>
+    return this.colWrapper(
+      (
+      <Form.Item name={field.key}  defaultValue={field.defaultValue}>
+
+        <Select mode="multiple" placeholder={field.placeholder || '请选择'} size="default">
+          {options}
+        </Select>
+      </Form.Item>
     ), field);
   },
 
@@ -271,8 +284,10 @@ const SchemaUtils = {
    */
   transformCascader(field) {
     logger.debug('transform field %o to Cascader component', field);
-    return this.colWrapper(getFieldDecorator => getFieldDecorator(field.key, {initialValue: field.defaultValue})(
-      <Cascader options={field.options} expandTrigger="hover" placeholder={field.placeholder || '请选择'} size="default"/>
+    return this.colWrapper( (
+      <Form.Item name={field.key} defaultValue={field.defaultValue}>
+        <Cascader options={field.options} expandTrigger="hover" placeholder={field.placeholder || '请选择'} size="default"/>
+      </Form.Item>
     ), field);
   },
 
@@ -286,24 +301,35 @@ const SchemaUtils = {
     switch (field.dataType) {
       case 'int':
         logger.debug('transform field %o to integer input component', field);
-        return this.colWrapper(getFieldDecorator => getFieldDecorator(field.key, {initialValue: field.defaultValue})(
+        return this.colWrapper( 
+          (
+          <Form.Item name={field.key} defaultValue={field.defaultValue}>
           <InputNumber size="default" max={field.max} min={field.min} placeholder={field.placeholder}/>
-        ), field);
+          </Form.Item>
+          ), field);
       case 'float':
         logger.debug('transform field %o to float input component', field);
-        return this.colWrapper(getFieldDecorator => getFieldDecorator(field.key, {initialValue: field.defaultValue})(
+        return this.colWrapper( 
+          (
+            <Form.Item name={field.key} defaultValue={ field.defaultValue}>
           <InputNumber step={0.01} size="default" max={field.max} min={field.min} placeholder={field.placeholder}/>
+          </Form.Item>
         ), field);
       case 'datetime':
         logger.debug('transform field %o to datetime input component', field);
-        return this.colWrapper(getFieldDecorator => getFieldDecorator(field.key, {initialValue: field.defaultValue ? moment(field.defaultValue) : null})(
-          <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder={field.placeholder || '请选择日期'}/>
+        return this.colWrapper((
+            <Form.Item name={field.key} defaultValue={field.defaultValue ? moment(field.defaultValue) : null}>
+              <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder={field.placeholder || '请选择日期'}/>
+          </Form.Item>
         ), field);
       default:  // 默认就是普通的输入框
         logger.debug('transform field %o to varchar input component', field);
-        return this.colWrapper(getFieldDecorator => getFieldDecorator(field.key, {initialValue: field.defaultValue})(
-          <Input placeholder={field.placeholder} size="default" addonBefore={field.addonBefore}
+        return this.colWrapper(
+           (
+             <Form.Item name={field.key} defaultValue={field.defaultValue} placeholder={field.placeholder}>
+                <Input  size="middle" addonBefore={typeof(field.addonBefore)=="string"? field.addonBefore: <field.addonBefore/>}
                  addonAfter={field.addonAfter}/>
+             </Form.Item>
         ), field);
     }
   },
@@ -318,18 +344,18 @@ const SchemaUtils = {
   betweenColWrapper(beginFormItem, endFormItem, field) {
     // 布局真是个麻烦事
     // col内部又用了一个row做布局
-    return getFieldDecorator => (
+    return (
       <Col key={`${field.key}Begin`} sm={8}>
         <Row>
           <Col span={16}>
-            <FormItem key={`${field.key}Begin`} label={field.title} labelCol={{ span: 15 }} wrapperCol={{ span: 9 }}>
-              {beginFormItem(getFieldDecorator)}
-            </FormItem>
+            <Form.Item key={`${field.key}Begin`} label={field.title} labelCol={{ span: 15 }} wrapperCol={{ span: 9 }}>
+              {beginFormItem}
+            </Form.Item>
           </Col>
           <Col span={7} offset={1}>
-            <FormItem key={`${field.key}End`} labelCol={{ span: 10 }} wrapperCol={{ span: 14 }}>
-              {endFormItem(getFieldDecorator)}
-            </FormItem>
+            <Form.Item key={`${field.key}End`} labelCol={{ span: 10 }} wrapperCol={{ span: 14 }}>
+              {endFormItem}
+            </Form.Item>
           </Col>
         </Row>
       </Col>
@@ -348,40 +374,53 @@ const SchemaUtils = {
     let endFormItem;
 
     // webstorm的代码格式化有时很奇怪...
-    switch (field.dataType) {
+    switch (field.dataType) {  
       case 'int':
         logger.debug('transform field %o to integer BETWEEN component', field);
-        beginFormItem = getFieldDecorator => getFieldDecorator(`${field.key}Begin`, {initialValue: field.defaultValueBegin})
-        (<InputNumber size="default" placeholder={field.placeholderBegin || '最小值'}/>);
-        endFormItem = getFieldDecorator => getFieldDecorator(`${field.key}End`, {initialValue: field.defaultValueEnd})
-        (<InputNumber size="default" placeholder={field.placeholderEnd || '最大值'}/>);
+        beginFormItem = (
+          <Form.Item name={`${field.key}Begin`}  defaultValue={field.defaultValueBegin}>
+
+            <InputNumber size="default" placeholder={field.placeholderBegin || '最小值'}/>
+          </Form.Item>
+        );
+        endFormItem = (
+          <Form.Item name={`${field.key}End`}  defaultValue={field.defaultValueEnd}>
+            <InputNumber size="default" placeholder={field.placeholderEnd || '最大值'}/>
+          </Form.Item>
+        );
         return this.betweenColWrapper(beginFormItem, endFormItem, field);
       case 'float':
         logger.debug('transform field %o to float BETWEEN component', field);
-        beginFormItem = getFieldDecorator => getFieldDecorator(`${field.key}Begin`, {initialValue: field.defaultValueBegin})
-        (<InputNumber step={0.01} size="default" placeholder={field.placeholderBegin || '最小值'}/>);
-        endFormItem = getFieldDecorator => getFieldDecorator(`${field.key}End`, {initialValue: field.defaultValueEnd})
-        (<InputNumber step={0.01} size="default" placeholder={field.placeholderEnd || '最大值'}/>);
+        beginFormItem = (
+          <Form.Item name={`${field.key}Begin`}  defaultValue={field.defaultValueBegin}>
+            <InputNumber step={0.01} size="default" placeholder={field.placeholderBegin || '最小值'}/>
+
+          </Form.Item>);
+        endFormItem = (
+          <Form.Item name={`${field.key}End`} defaultValue={field.defaultValueEnd}>
+            <InputNumber step={0.01} size="default" placeholder={field.placeholderEnd || '最大值'}/>
+          </Form.Item>
+          );
         return this.betweenColWrapper(beginFormItem, endFormItem, field);
       // datetime类型的between要占用两个Col
       // 不写辅助函数了, 直接这里写jsx吧...
       case 'datetime':
         logger.debug('transform field %o to datetime BETWEEN component', field);
         // 只能返回一个顶层元素
-        return getFieldDecorator => (
+        return (
           <div key={'datetimeBetweenDiv'}>
             <Col key={`${field.key}Begin`} sm={8}>
-              <FormItem key={`${field.key}Begin`} label={field.title} labelCol={{ span: 10 }}
+              <Form.Item name={`${field.key}Begin`} label={field.title} labelCol={{ span: 10 }}
                         wrapperCol={{ span:14 }}>
-                {getFieldDecorator(`${field.key}Begin`, {initialValue: field.defaultValueBegin ? moment(field.defaultValueBegin) : null})
-                (<DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder={field.placeholderBegin || '开始日期'}/>)}
-              </FormItem>
+                {/* {getFieldDecorator(`${field.key}Begin`, defaultValue={field.defaultValueBegin ? moment(field.defaultValueBegin) : null}) */}
+                <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder={field.placeholderBegin || '开始日期'}/>
+              </Form.Item>
             </Col>
             <Col key={`${field.key}End`} sm={8}>
-              <FormItem key={`${field.key}End`} labelCol={{ span: 10 }} wrapperCol={{ span:14 }}>
-                {getFieldDecorator(`${field.key}End`, {initialValue: field.defaultValueEnd ? moment(field.defaultValueEnd) : null})
-                (<DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder={field.placeholderEnd || '结束日期'}/>)}
-              </FormItem>
+              <Form.Item name={`${field.key}End`} labelCol={{ span: 10 }} wrapperCol={{ span:14 }}>
+                {/* {getFieldDecorator(`${field.key}End`, defaultValue={field.defaultValueEnd ? moment(field.defaultValueEnd) : null}) */}
+                <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" placeholder={field.placeholderEnd || '结束日期'}/>
+              </Form.Item>
             </Col>
           </div>
         );

@@ -41,6 +41,7 @@ const SchemaUtils = {
    * @returns {*}
    */
   getTableSchema(tableName, schema) {
+
     // 做一层缓存
     // 怎么感觉我在到处做缓存啊...工程化风格明显
     if (tableSchemaMap.has(tableName)) {
@@ -50,7 +51,8 @@ const SchemaUtils = {
     const toCache = {};
     const newCols = [];
     const fieldMap = new Map();
-    schema.forEach((field) => {
+    // console.log( schema);
+    schema.default.forEach((field) => {
       // 在表格中显示的时候, 要将radio/checkbox之类的转换为文字
       // 比如schema中配置的是{key:1, value:haha}, 后端返回的值是1, 但前端展示时要换成haha
       if (field.options) {
@@ -158,7 +160,7 @@ const SchemaUtils = {
   createForm(tableName, schema) {
     const ignoreCache = TableUtils.shouldIgnoreSchemaCache(tableName);
     const that = this;
-    const tmpComponent = React.createClass({
+    class tmpComponent extends React.Component{
       componentWillMount() {
         if (formSchemaMap.has(tableName)) {
           this.schemaCallback = formSchemaMap.get(tableName);
@@ -169,18 +171,18 @@ const SchemaUtils = {
           formSchemaMap.set(tableName, schemaCallback);
         }
         this.schemaCallback = schemaCallback;
-      },
+      };
       // 表单挂载后, 给表单一个初始值
       componentDidMount(){
         if (this.props.initData) {  // 这种方法都能想到, 我tm都佩服自己...
           this.props.form.setFieldsValue(this.props.initData);
         }
-      },
-      render() {
+      };
+      render() { 
         return this.schemaCallback(this.props.form.getFieldDecorator, this.props.forUpdate, this.props.keysToUpdate);
-      },
-    });
-    return Form.create()(tmpComponent);
+      };
+    };
+    return tmpComponent;
   },
 
   /**
