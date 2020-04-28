@@ -25,7 +25,7 @@ class FileUploader extends React.Component {
     fileList: [],  // 已经上传的文件列表
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const {defaultValue, max, url, type} = this.props;
     // 当前是要上传图片还是普通图片? 会影响后续的很多东西
     const forImage = type === 'image';
@@ -73,7 +73,7 @@ class FileUploader extends React.Component {
     this.forImage = forImage;
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // 如果上层通过props传过来一个value, 要不要根据value更新文件列表?
     // 对于普通的controlled-components而言, 是应该更新的, 相当于本身没有状态, 完全被上层控制
     // 但这个组件不是完全的controlled-components...只会向外暴露value, 但也有自己的状态

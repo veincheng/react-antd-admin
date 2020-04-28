@@ -9,12 +9,12 @@ class UpdateGPA1 extends React.PureComponent {
     inputValue: 0,
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     // 当前选中的那条记录, 会以props.record的形式传进来
     this.state.inputValue = this.props.record.gpa;
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.state.inputValue = nextProps.record.gpa;
   }
 
@@ -56,11 +56,11 @@ class UpdateGPA2 extends React.PureComponent {
     inputValue: 0,
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.state.inputValue = this.props.record.gpa;
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.state.inputValue = nextProps.record.gpa;
   }
 

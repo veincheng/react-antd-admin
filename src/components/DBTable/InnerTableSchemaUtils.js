@@ -161,7 +161,7 @@ const SchemaUtils = {
     const ignoreCache = TableUtils.shouldIgnoreSchemaCache(tableName);
     const that = this;
     class tmpComponent extends React.Component{
-      componentWillMount() {
+      UNSAFE_componentWillMount() {
         if (formSchemaMap.has(tableName)) {
           this.schemaCallback = formSchemaMap.get(tableName);
           return;
@@ -214,7 +214,7 @@ const SchemaUtils = {
         formRows.push(row(getFieldDecorator, forUpdate, keysToUpdate));
       }
 
-      return (<Form horizontal>
+      return (<Form horizontal="true">
         {formRows}
       </Form>);
     };

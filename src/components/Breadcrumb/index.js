@@ -20,11 +20,11 @@ class Bread extends React.PureComponent {
   // 上面两个map本来是做成static变量的, 后来感觉还是当成普通的成员变量好些
   // 如果是static变量, 那就跟react组件的生命周期完全没关系了
 
-  // 话说, 虽然constructor和componentWillMount方法作用差不多, 但我还是觉得componentWillMount更好用
+  // 话说, 虽然constructor和UNSAFE_componentWillMount方法作用差不多, 但我还是觉得UNSAFE_componentWillMount更好用
   // 因为constructor还要super(props), 有点啰嗦
   // 虽然react官方推荐constructor, 因为constructor中可以设置初始状态
   // 不过实际上初始状态可以直接通过定义成员变量的方式设置, 不一定要在constructor中
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     // 准备初始化iconMap和nameMap
     const iconMap = new Map();
     const nameMap = new Map();

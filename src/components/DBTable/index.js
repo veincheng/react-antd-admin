@@ -47,7 +47,7 @@ class DBTable extends React.PureComponent {
 
   // 这里有个很有意思的问题, 就是异步操作的局限性, 你没办法控制callback何时被调用
   // 我本来的写法是这样的:
-  // async componentWillMount() {
+  // async UNSAFE_componentWillMount() {
   //   // tryFetchSchema方法可能是同步也可能是异步, 跟tableConfig.asyncSchema有关
   //   // 如果是同步调用, 会直接返回一个resolved状态的promise
   //   // 如果是异步调用, 会返回一个pending状态的promise
@@ -59,11 +59,11 @@ class DBTable extends React.PureComponent {
   //   }
   // }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     // 处理url参数
     this.processQueryParams();
     // 组件初始化时尝试获取schema
-    console.log( this.props);
+    // console.log( this.props);
     this.tryFetchSchema(this.props, (res) => {
       this.updateTableState(res);
       // 这个参数用于判断获取schema是同步还是异步
@@ -84,7 +84,7 @@ class DBTable extends React.PureComponent {
   }
 
   // 在react router中切换时, 组件不会重新mount, 只有props会变化
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // 普通模式下, 所有的CRUD操作都是通过同一个DBTable组件进行的, 只是传入的tableName不同而已
     // 但是在tab模式下, 为了防止不同tab之间的干扰, 每个tab下都必须是一个"独立"的组件, 换句话说有很多不同DBTable组件的实例
     // 类似单例和多实例的区别
@@ -93,8 +93,10 @@ class DBTable extends React.PureComponent {
       return;
     }
 
-    // FIXME: hack, 和App组件中componentWillReceiveProps方法类似
-    const action = this.props.location.action;
+    // FIXME: hack, 和App组件中UNSAFE_componentWillReceiveProps方法类似
+    // console.log( this.props);
+    // before as location
+    const action = this.props.history.action;
     if (action === 'PUSH') {
       return;
     }
@@ -140,11 +142,14 @@ class DBTable extends React.PureComponent {
    * @returns {undefined}
    */
   async tryFetchSchema(props, callback) {
-    console.log( props) ;
-    // const routes = props.routes;
+    // console.debug("props:", this.props) ;
+    // console.debug("self args", props);
+    let tableName = "test";
+    if(props.hasOwnProperty('tableName')){
+       tableName =  props.tableName ;
+    }
     // 这个tableName是路由表配置中传过来的
     // 可以用这个方法向组件传值
-    const tableName = "test";
     // const tableName = routes.pop().tableName;
     if (tableName) {
       logger.info('init component DBTable with tableName = %s', tableName);
@@ -358,7 +363,7 @@ class DBTable extends React.PureComponent {
     // 一段有些tricky的代码, 某些情况下显示一个特殊的loading
     // 主要是为了用户第一次进入的时候, 交互更友好
     // FIXME: 这段代码非常丑, (!this.inited && !this.errorMsg)这个条件是为了hack一个react-router的问题
-    // 如果从首页点击侧边栏进入DBTable组件, 会依次触发componentWillMount和componentWillReceiveProps, 而直接从url进入的话则只会触发componentWillMount
+    // 如果从首页点击侧边栏进入DBTable组件, 会依次触发UNSAFE_componentWillMount和UNSAFE_componentWillReceiveProps, 而直接从url进入的话则只会触发UNSAFE_componentWillMount
     // 感觉react-router坑好多啊
     // <div style={{ height: '150px', width: '100%' }}></div>
       // <Spin tip="loading schema..." spinning={this.state.loadingSchema} delay={500}>

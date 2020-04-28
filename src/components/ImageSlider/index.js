@@ -13,7 +13,7 @@ class ImageSlider extends React.PureComponent {
     currentIndex: 0,
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.navButton = (
       <span key="navigation">
         <button type="button" className="image-gallery-left-nav" onClick={this.slideLeft}/>
@@ -22,7 +22,7 @@ class ImageSlider extends React.PureComponent {
     );
   }
 
-  componentWillReceiveProps() {
+  UNSAFE_componentWillReceiveProps() {
     // 每次从外界传新的图片过来时, 都要还原状态
     this.state.currentIndex = 0;
     this.state.previousIndex = 0;

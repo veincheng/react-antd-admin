@@ -46,7 +46,7 @@ class InnerTable extends React.PureComponent {
   /**
    * 组件初次挂载时parse schema
    */
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.parseTableSchema(this.props);
     this.parseTableData(this.props);
   }
@@ -61,7 +61,7 @@ class InnerTable extends React.PureComponent {
    *
    * @param nextProps
    */
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     logger.debug('receive new props and try to render, nextProps=%o', nextProps);
     // 之前因为antd的Form组件搞了一些黑盒操作, 表单每输入一次都会触发这个方法, 现在表单独立成一个组件了, 应该好了
 
@@ -135,7 +135,7 @@ class InnerTable extends React.PureComponent {
       newData.push(newObj);
     });
 
-    // 在这里, 下面两种写法是等效的, 因为parseTableData方法只会被componentWillReceiveProps调用, 而componentWillReceiveProps的下一步就是判断是否re-render
+    // 在这里, 下面两种写法是等效的, 因为parseTableData方法只会被UNSAFE_componentWillReceiveProps调用, 而UNSAFE_componentWillReceiveProps的下一步就是判断是否re-render
     // 但要注意, 不是任何情况下都等效
     //this.setState({data: newData});
     this.state.data = newData;

@@ -32,9 +32,9 @@ const routes = (
        <Route path="/">
       <App>
       <Switch>  
-          <Route path="/index/option1"  component={Hello}/>
-          <Route path="/index/option2"  component={DBTable} tableName="d"/>
-          <Route path="/index/option3"  component={Hello}/>
+          <Route path="/index/option1"  render={ (props)=> <DBTable {...props} tableName="test"/> } />
+          <Route path="/index/option2"  render={ (props) => <DBTable {...props} tableName="testAction"/> }/>
+          <Route path="/index/option3"  render={(props)=> <DBTable {...props} tableName="testSms"/>}/>
           <Route path="/alone" component={Hello}/>
         <Route path="/alone2" component={Hello}/>
       </Switch>

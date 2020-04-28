@@ -58,7 +58,7 @@ class Sidebar extends React.Component {
 
   // 在每次组件挂载的时候parse一次菜单, 不用每次render都解析
   // 其实这个也可以放在constructor里
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const paths = [];  // 暂存各级路径, 当作stack用
     const level1KeySet = new Set();  // 暂存所有顶级菜单的key
     const level2KeyMap = new Map();  // 次级菜单与顶级菜单的对应关系

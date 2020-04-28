@@ -8,7 +8,7 @@ import './index.scss';
  */
 class Error extends React.PureComponent {
   render() {
-    console.log("enter error js")
+    // console.log("enter error js")
     return (
       <div className="not-found">
         <div style={{ fontSize:32 }}><FrownOutlined/></div>

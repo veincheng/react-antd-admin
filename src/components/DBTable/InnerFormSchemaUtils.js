@@ -72,7 +72,7 @@ const SchemaUtils = {
     // 如何动态生成一个组件? 如果用class的写法, 似乎不行...
     // 只能用传统的ES5的写法, 函数式组件应该也可以, 但是我需要生命周期相关方法
     return class tmpComponent extends React.Component{
-      componentWillMount() {
+      UNSAFE_componentWillMount() {
         // 组件初始化时读取schema
         if (schemaMap.has(tableName)) {
           this.schemaCallback = schemaMap.get(tableName);
@@ -165,7 +165,7 @@ const SchemaUtils = {
       }
 
       return (
-      <Form horizontal>
+      <Form horizontal="true">
         {formRows}
       </Form>
       )

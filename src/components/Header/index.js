@@ -32,7 +32,7 @@ class Header extends React.PureComponent {
     );
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const paths = [];
 
     // 这一项菜单是必须有的, 不需要在配置文件里配置

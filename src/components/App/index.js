@@ -44,7 +44,7 @@ class App extends React.Component {
   /**
    * 组件挂载之前判断是否要更新tab
    */
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     // 如果不是tab模式直接返回
     if (globalConfig.tabMode.enable !== true) {
       return;
@@ -57,7 +57,7 @@ class App extends React.Component {
   /**
    * 每次在react-router中切换时也要判断是否更新tab
    */
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // 如果不是tab模式直接返回
     /*
     if (globalConfig.tabMode.enable !== true) {
@@ -280,9 +280,10 @@ class App extends React.Component {
     }
     // 非tab模式, 显示面包屑和对应的组件
     else {
-      console.log(this.props);
+      // console.error(this.props);
+      // this.props.routes
       return <div>
-        <Breadcrumb routes={this.props.routes}/>
+        <Breadcrumb/>
         <div className="ant-layout-container">
           {this.props.children}
         </div>
